@@ -1,11 +1,17 @@
 import { Application, Request, Response } from "express";
 import express from "express";
-
+import bodyParser from "body-parser";
+import cors from 'cors';
+import morgan from 'morgan';
+import startServer from "./core/startServer";
+// Routes
+import authRoutes from "./routes/authRoutes";
 const app: Application = express()
-const PORT: number = 5000 || process.env.PORT
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('Index Page')
-})
+app.use(cors())
+app.use(morgan('dev'))
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use('/api/auth', authRoutes)
 
-app.listen(PORT, () => console.log('Server has been started on port ', PORT))
+startServer(app)
