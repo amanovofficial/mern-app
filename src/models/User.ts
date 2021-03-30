@@ -1,24 +1,37 @@
-import {Schema,model,Document} from "mongoose";
-
-export interface IUser extends Document{
-    name:string,
-    password:string,
-    phoneNumber:string
+import { Schema, model, Document, Types } from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
+export interface IUser extends Document {
+    _id?: Types.ObjectId,
+    role: string,
+    name: string,
+    password: string,
+    phoneNumber: string,
+    isBlocked?:boolean
 }
 
-const UserSchema:Schema = new Schema({
-    name:{
-        type:String,
-        required:true
+const UserSchema: Schema = new Schema({
+    role: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
     },
-    phoneNumber:{
-        type:String,
-        required:true
-    }
-}) 
+    password: {
+        type: String,
+        required: true
+    },
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
 
-export const UserModel = model<IUser>("User", UserSchema);
+})
+
+UserSchema.plugin(mongoosePaginate)
+export const UserModel = model("User", UserSchema);
