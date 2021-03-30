@@ -1,48 +1,52 @@
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
-import { UserModel } from "../models/User";
+import { IUser, UserModel } from "../models/User";
 import { validationResult, Result, ValidationError } from "express-validator";
-import keys from "../config/keys.dev";
-const { JWT_SECRET_KEY } = keys
+import errorHandler from "../utils/validations/errorHandler";
+import config from "../config";
+const { JWT_SECRET_KEY } = config
 
 export const register = async (req: Request, res: Response): Promise<void> => {
 
-    const postData: { name: string; password: string; phoneNumber: string } = {
-        name: req.body.name,
-        password: req.body.password,
-        phoneNumber: req.body.phoneNumber
-    }
+    const { role, name, password, phoneNumber }: IUser = req.body
+
     const errors: Result<ValidationError> = validationResult(req)
     try {
-        if (!errors.isEmpty()) {
-            throw Error(errors.array().map(err => err.msg).join(', '))
+        errorHandler(errors)
+
+        if (role === 'admin') {
+            const admin: IUser = await UserModel.findOne({ role: 'admin' })
+            if (admin) throw Error('В системе уже создан учетный запись администратора')
         }
-        const user = await UserModel.findOne({ phoneNumber: postData.phoneNumber })
+
+        const user: IUser = await UserModel.findOne({ phoneNumber })
 
         if (user) throw Error('Пользователь с таким номером уже существует, введите другой номер')
 
-        const salt = await bcrypt.genSalt(10)
+        const salt: string = await bcrypt.genSalt(10)
         if (!salt) throw Error('Произошла ошибка при создании salt')
 
-        const hash = await bcrypt.hash(postData.password, salt)
+        const hash: string = await bcrypt.hash(password, salt)
         if (!hash) throw Error('Произошла ошибка при хэшировании пароля')
 
-        const newUser = new UserModel({
-            name: postData.name,
+        const newUser: IUser = new UserModel({
+            role,
+            name,
             password: hash,
-            phoneNumber: postData.phoneNumber
+            phoneNumber
         })
 
-        const savedUser = await newUser.save()
+        const savedUser: IUser = await newUser.save()
         if (!savedUser) throw Error('Произошла ошибка при сохранении пользователя в БД')
 
-        const token = jwt.sign({ id: savedUser._id }, JWT_SECRET_KEY, { expiresIn: 3600 })
+        const token: string = jwt.sign({ id: savedUser._id, role: savedUser.role }, JWT_SECRET_KEY, { expiresIn: 3600 })
 
         res.status(201).json({
             token,
             user: {
                 id: savedUser._id,
+                role: savedUser.role,
                 name: savedUser.name,
                 phoneNumber: savedUser.phoneNumber
             }
@@ -55,26 +59,25 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
 export const login = async (req: Request, res: Response): Promise<void> => {
 
-    const phoneNumber: string = req.body.phoneNumber
-    const password: string = req.body.password
-
+    const { phoneNumber, password }: IUser = req.body
     const errors: Result<ValidationError> = validationResult(req)
     try {
-        if (!errors.isEmpty()) throw Error(errors.array().map(err => err.msg).join(', '))
+        errorHandler(errors)
 
-        const user = await UserModel.findOne({ phoneNumber })
+        const user: IUser = await UserModel.findOne({ phoneNumber })
         if (!user) throw Error('Пользователь с таким номером не найден')
-
-        const isMatch = await bcrypt.compare(password, user.password)
+        if (user.isBlocked) throw Error('Ваш аккаунт заблокирован, администратором сайта')
+        const isMatch: boolean = await bcrypt.compare(password, user.password)
 
         if (!isMatch) throw Error('Введень неправильный пароль')
 
-        const token = jwt.sign({ id: user._id }, JWT_SECRET_KEY, { expiresIn: 3600 })
+        const token: string = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET_KEY, { expiresIn: 3600 })
 
         res.status(200).json({
             token,
             user: {
                 id: user._id,
+                role: user.role,
                 name: user.name,
                 phoneNumber: user.phoneNumber
             }
@@ -88,8 +91,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
 export const getUser = async (req: Request, res: Response): Promise<void> => {
 
-    const user = await UserModel.findById(res.locals.user.id).select('-password')
+    const user: IUser = await UserModel.findById(res.locals.user.id)
     if (!user) res.status(404).json({ message: 'Пользователь не найден' })
 
-    res.json(user)
+    res.json({
+        id: user._id,
+        role: user.role,
+        name: user.name,
+        phoneNumber: user.phoneNumber
+    })
 }
