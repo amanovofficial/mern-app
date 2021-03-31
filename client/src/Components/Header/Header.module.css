@@ -1,0 +1,13 @@
+.Header{
+    font-weight: 500;
+    font-size: 50px;
+    text-align: center;
+    margin: 50px 0;
+}
+
+Title{
+    margin: 50px 0 0 0;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34px;
+}

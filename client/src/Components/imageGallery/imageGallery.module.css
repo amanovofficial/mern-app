@@ -1,0 +1,17 @@
+
+.imgContainer{
+    display: flex;
+}
+
+.card{
+    width: 200px;
+}
+
+.img{
+    width: 100%;
+}
+
+.deleteBtn{
+    background-color: red;
+    color: white;
+}

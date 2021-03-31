@@ -1,0 +1,51 @@
+.ref{
+    color: rgb(22, 190, 162) !important;
+    text-decoration: none
+}
+.ref:hover{
+    text-decoration: none;
+}
+.refBtn{
+    color: white !important;
+    text-decoration: none
+}
+.refBtn:hover{
+    text-decoration: none;
+}
+
+.editButton, .deleteButton{
+    margin: 15px;
+    width: 150px;
+    height: 35px;
+    border-radius: 10px;
+    font-weight:450;
+}
+
+.editButton {
+    background-color: rgb(22, 190, 162);
+    color: white;
+    border: rgb(22, 190, 162);
+}
+
+.editButton:hover{
+    border: 1px solid white;
+}
+
+.deleteButton{
+    background: crimson;
+    border: 1px solid crimson;
+    color: white;
+}
+
+.deleteButton:hover {
+    border: 1px solid white;
+}
+
+.btnContainer{
+    display: flex;
+}
+
+.unpublished{
+    color: crimson;
+    margin-left: 10px;
+}

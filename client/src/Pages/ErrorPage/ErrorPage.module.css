@@ -1,0 +1,22 @@
+.container{
+    margin: auto;
+    margin-top: 10vh;
+    width: 60vw;
+    height: 70vh;
+    border: 2px solid rgba(255, 3, 3, 0.404);
+    border-radius: 15px;
+    background-color: rgba(220, 20, 60, 0.123);
+    text-align: center;
+}
+
+.errorHeader{
+    color: rgba(255, 3, 3, 0.664);
+    font-size: 7rem;
+    /* font-weight: bold; */
+}
+
+.errorMessageDescription{
+    color: rgba(255, 3, 3, 0.664);
+    font-size: 2rem;
+    /* font-weight: bold; */
+}

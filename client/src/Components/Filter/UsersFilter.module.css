@@ -1,0 +1,102 @@
+.wrapper{
+    border:2px solid black;
+    border-radius: 10px;
+    justify-content: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    padding: 4vh 4vw 4vh 4vw;
+}
+.container{
+    display: flex;
+}
+.alert{
+    margin: 0;
+    color: crimson;
+}
+
+.inputs{
+    display: flex;
+}
+
+.input{
+    width: 400px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 20px 5px 20px 0px;
+    padding: 10px 10px 10px 20px;
+    font-size: 1.5rem;
+}
+
+.buttonWrapper{
+    display: flex;
+}
+.button{
+    height: 40px;
+    width: 5vw;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 20px 0 0 10px;
+    font-weight: bold;
+}
+
+.activeButton{
+    height: 40px;
+    width: 90px;
+    color: rgb(20, 177, 151);
+    border: 2px solid rgb(20, 177, 151);
+    border-radius: 5px;
+    margin: 20px 0 0 10px;
+    font-weight: bold;
+
+    animation-name: blinker;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
+    animation-duration: 1s;
+    -webkit-animation-name: blinker;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
+    -webkit-animation-duration: 1s;
+}
+
+@keyframes blinker {
+    from { opacity: 1.0; }
+    to { opacity: 0.2; }
+  }
+   
+@-webkit-keyframes blinker {
+    from { opacity: 1.0; }
+    to { opacity: 0.2; }
+  }
+
+input:focus{
+    outline: none;
+}
+
+button:focus{
+    outline: none;
+}
+
+.list{
+    margin:0px 100px 0px 100px;
+}
+
+.listItem{
+    margin:0px 20px 0px 20px;
+}
+
+.label{
+    margin: 0 10px 0 10px;
+}
+
+.numberOfRooms{
+    display: flex;
+}
+
+.adress{
+    display: flex;
+}
+

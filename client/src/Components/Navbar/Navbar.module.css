@@ -1,0 +1,26 @@
+.navbarBrand{
+    color: white;
+}
+.ref{
+    color:white;
+    text-decoration: none;
+    padding-top: 3px;
+    margin: 0 30px 0 10px;
+}
+
+.ref:hover{
+    color:white;
+    text-decoration: none;
+}
+
+.auth{
+    color:white;
+    text-decoration: none;
+    padding-top: 3px;
+    margin: 0 10px 0px 0px;
+}
+
+.auth:hover{
+    color:white;
+    text-decoration: none;
+}

@@ -1,4 +1,6 @@
 node_modules
+client/node_modules
+client/.eslintcache
 dist
 yarn-error.log
 .env

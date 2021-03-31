@@ -1,0 +1,60 @@
+.card{
+    margin-top: 0;
+    /* margin-bottom: 10px; */
+    /* border:1px solid black; */
+    padding: 0;
+    
+}
+
+.marginBlock{
+    margin: 10px;
+    border:1px solid black;
+    border-radius: 10px;
+}
+
+.blocking,.unblocking, .deleteButton{
+    margin: 15px;
+    width: 150px;
+    height: 35px;
+    border-radius: 10px;
+    font-weight:450;
+}
+
+.blocking {
+    background-color: black;
+    color: white;
+    border: black
+}
+.blocking:hover{
+    border: 1px solid white;
+}
+
+.unblocking {
+    background-color: #4fc08d;
+    color: white;
+    border: #4fc08d;
+}
+
+.unblocking:hover{
+    border: 1px solid white;
+}
+
+
+.deleteButton{
+    background: crimson;
+    border: 1px solid crimson;
+    color: white;
+}
+
+.deleteButton:hover {
+    border: 1px solid white;
+}
+
+.btnContainer{
+    display: flex;
+}
+
+.unpublished{
+    color: crimson;
+    margin-left: 10px;
+}
