@@ -6,7 +6,7 @@ import path from "path";
 const storage = multer.diskStorage({
 
     destination(req: Request, file: Express.Multer.File, cb) {
-        cb(null, './src/images/ads')
+        cb(null, './images/ads')
     },
     filename(req: Request, file: Express.Multer.File, cb) {
         const date = moment().format('DDMMYYYY-HHmmss_SSS')

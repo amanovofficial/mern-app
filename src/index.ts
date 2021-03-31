@@ -8,14 +8,13 @@ import startServer from "./core/startServer";
 import authRoutes from "./routes/authRoutes";
 import adRoutes from "./routes/adRoutes";
 import userRoutes from "./routes/userRoutes";
-
 const app: Application = express()
 
 app.use(cors())
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(express.static(__dirname + '/images/ads'))
+app.use(express.static(__dirname + '/../images/ads'))
 app.use('/api/auth', authRoutes)
 app.use('/api/ads', adRoutes)
 app.use('/api/users', userRoutes)
