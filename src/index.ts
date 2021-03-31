@@ -7,6 +7,7 @@ import startServer from "./core/startServer";
 // Routes
 import authRoutes from "./routes/authRoutes";
 import adRoutes from "./routes/adRoutes";
+import userRoutes from "./routes/userRoutes";
 
 const app: Application = express()
 
@@ -17,5 +18,6 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname + '/images/ads'))
 app.use('/api/auth', authRoutes)
 app.use('/api/ads', adRoutes)
+app.use('/api/users', userRoutes)
 
 startServer(app)
